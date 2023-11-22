@@ -30,11 +30,11 @@ To run this project, you will need to define the following environments variable
 
 ## Application Architecture
 
-![App architecture](./assets/architecture.png)
+<img width="885" alt="storyMapYouQuiz" src="https://github.com/Alikhalif/QuizTime_V2/blob/main/UML_YouQuiz.drawio.png">
 
 ## Class Diagram
 
-![App class diagram](./assets/diagram_class.png)
+<img width="885" alt="storyMapYouQuiz" src="https://github.com/Alikhalif/QuizTime_V2/blob/main/UML_YouQuiz.drawio.png">
 
 
 ## API Reference
