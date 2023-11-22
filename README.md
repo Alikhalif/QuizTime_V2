@@ -28,13 +28,18 @@ To run this project, you will need to define the following environments variable
 
 **Unit Testing:** Junit 5, Mockito
 
-## Application Architecture
-
-<img width="885" alt="storyMapYouQuiz" src="https://github.com/Alikhalif/QuizTime_V2/blob/main/UML_YouQuiz.drawio.png">
 
 ## Class Diagram
 
 <img width="885" alt="storyMapYouQuiz" src="https://github.com/Alikhalif/QuizTime_V2/blob/main/UML_YouQuiz.drawio.png">
+
+## Architecture
+
+<img width="885" alt="storyMapYouQuiz" src="https://github.com/Alikhalif/QuizTime_V2/blob/main/architecture.png">
+
+## Story Map
+
+<img width="885" alt="storyMapYouQuiz" src="https://github.com/Alikhalif/QuizTime_V2/blob/main/Story_Map.png">
 
 
 ## API Reference
