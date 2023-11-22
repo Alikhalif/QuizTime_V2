@@ -1,0 +1,109 @@
+package com.youcode.youQuizV2.ImplService;
+
+import com.youcode.youQuizV2.Service.ImplService.MediaServiceImpl;
+import com.youcode.youQuizV2.dto.MediaDto;
+import com.youcode.youQuizV2.entities.Media;
+import com.youcode.youQuizV2.entities.Question;
+import com.youcode.youQuizV2.enums.MediaType;
+import com.youcode.youQuizV2.repositories.MediaRepository;
+import com.youcode.youQuizV2.repositories.QuestionRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
+
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+public class MediaServiceTest {
+
+    @Mock
+    private MediaRepository mediaRepository;
+
+    @Mock
+    private QuestionRepository questionRepository;
+
+    @Mock
+    private ModelMapper modelMapper;
+
+    @InjectMocks
+    private MediaServiceImpl mediaService;
+
+    private MediaDto mediaDto;
+    private Media media;
+    private Question question;
+
+
+    @BeforeEach
+    public void setUp() {
+        mediaDto = new MediaDto();
+        mediaDto.setId(1);
+        mediaDto.setUrl("https://image.com");
+        mediaDto.setMediaType(MediaType.IMAGE);
+        mediaDto.setQuestion_id(1L);
+
+        question = new Question();
+        question.setId(1L);
+
+        media = new Media();
+        media.setId(1);
+        media.setUrl("https://image.com");
+        media.setMediaType(MediaType.IMAGE);
+        media.setQuestion(question);
+    }
+
+
+    @Test
+    public void testCreate() {
+        when(modelMapper.map(mediaDto, Media.class)).thenReturn(media);
+        when(questionRepository.findById(1L)).thenReturn(Optional.of(question));
+        when(mediaRepository.save(any(Media.class))).thenReturn(media);
+
+        MediaDto result = mediaService.create(mediaDto);
+
+        assertNotNull(result);
+        assertEquals(mediaDto.getId(), result.getId());
+        assertEquals(mediaDto.getUrl(), result.getUrl());
+        assertEquals(mediaDto.getMediaType(), result.getMediaType());
+        assertEquals(mediaDto.getQuestion_id(), result.getQuestion_id());
+
+        verify(modelMapper, times(1)).map(mediaDto, Media.class);
+        verify(questionRepository, times(1)).findById(1L);
+        verify(mediaRepository, times(1)).save(any(Media.class));
+    }
+
+    @Test
+    public void testDelete() {
+        when(mediaRepository.findById(1)).thenReturn(Optional.of(media));
+
+        assertDoesNotThrow(() -> mediaService.delete(1));
+
+        verify(mediaRepository, times(1)).findById(1);
+        verify(mediaRepository, times(1)).delete(media);
+    }
+
+
+    @Test
+    public void testGetOne() {
+        when(mediaRepository.findById(1)).thenReturn(Optional.of(media));
+        when(modelMapper.map(media, MediaDto.class)).thenReturn(mediaDto);
+
+        MediaDto result = mediaService.getOne(1);
+
+        assertNotNull(result);
+        assertEquals(mediaDto.getId(), result.getId());
+        assertEquals(mediaDto.getUrl(), result.getUrl());
+        assertEquals(mediaDto.getMediaType(), result.getMediaType());
+        assertEquals(mediaDto.getQuestion_id(), result.getQuestion_id());
+
+        verify(mediaRepository, times(1)).findById(1);
+        verify(modelMapper, times(1)).map(media, MediaDto.class);
+    }
+}

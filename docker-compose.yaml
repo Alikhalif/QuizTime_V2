@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  db:
+    ports:
+      - 5432:5432
+    container_name: postgresql_container
+    image: postgres
+    environment:
+      - POSTGRES_DB=youquiz
+      - POSTGRES_PASSWORD=1999
+      - POSTGRES_USER=postgres
+    volumes:
+      - C:\postgres_datapart:/var/lib/postgresql/data
+    restart: always
+  backend:
+    build: .
+    container_name: app_container
+    ports:
+      - 8089:8089
+    environment:
+      db-url: jdbc:postgresql://db:5432/youquiz
+      db-username: postgres
+      db-password: 1999
+    depends_on:
+      - db
+    restart: always
+
+

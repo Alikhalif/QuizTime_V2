@@ -1,0 +1,86 @@
+package com.youcode.youQuizV2.Service.ImplService;
+
+import com.youcode.youQuizV2.Service.TempoQuizService;
+import com.youcode.youQuizV2.dto.TompQuizDto;
+import com.youcode.youQuizV2.entities.Question;
+import com.youcode.youQuizV2.entities.Quiz;
+import com.youcode.youQuizV2.entities.TompQuiz;
+import com.youcode.youQuizV2.repositories.QuestionRepository;
+import com.youcode.youQuizV2.repositories.QuizRepository;
+import com.youcode.youQuizV2.repositories.TompQuizRepository;
+import com.youcode.youQuizV2.tool.TempID;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityNotFoundException;
+
+@Service
+public class TempoQuizServiceImpl implements TempoQuizService {
+    @Autowired
+    private TompQuizRepository tompquizRepository;
+    @Autowired
+    private QuestionRepository questionRepository;
+    @Autowired
+    private QuizRepository quizRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+
+    @Override
+    public TompQuizDto create(TompQuizDto tompQuizDto){
+        TompQuiz tompQuiz = modelMapper.map(tompQuizDto, TompQuiz.class);
+        Question question = questionRepository.findById(tompQuizDto.getQuestion_id())
+                .orElseThrow(() -> new EntityNotFoundException("not found question with id : "+tompQuizDto.getQuestion_id()));
+        tompQuiz.setQuestion(question);
+
+        Quiz quiz = quizRepository.findById(tompQuizDto.getQuiz_id())
+                .orElseThrow(() -> new EntityNotFoundException("not found quiz with id : "+tompQuizDto.getQuiz_id()));
+        tompQuiz.setQuiz(quiz);
+
+        TempID tempID = new TempID(
+                tompQuizDto.getQuiz_id(),
+                tompQuizDto.getQuestion_id()
+        );
+
+        if (tompquizRepository.existsById(tempID)){
+            throw new EntityNotFoundException("Question already assigned to the quiz");
+        }else {
+            tompQuiz.setId(tempID);
+        }
+
+        tompQuiz.setTime(tompQuiz.getTime());
+
+        tompQuiz = tompquizRepository.save(tompQuiz);
+        return modelMapper.map(tompQuiz, TompQuizDto.class);
+    }
+
+    @Override
+    public void delete(Long quiz_id, Long question_id){
+        TempID tempID = new TempID(
+                quiz_id,
+                question_id
+        );
+        TompQuiz tompQuiz = tompquizRepository.findById(tempID)
+                .orElseThrow(() -> new EntityNotFoundException("temp quiz not find with id: "+tempID));
+        tompquizRepository.delete(tompQuiz);
+    }
+
+    @Override
+    public TompQuizDto update(Long quiz_id, Long question_id, TompQuizDto tompQuizDto){
+        TempID tempID = new TempID(
+                quiz_id,
+                question_id
+        );
+
+        TompQuiz tompQuizUpdated = tompquizRepository.findById(tempID)
+                .orElseThrow(() -> new EntityNotFoundException("temp quiz not find with id: "+tempID));
+
+        tompQuizUpdated.setTime(tompQuizDto.getTime());
+
+        tompQuizUpdated = tompquizRepository.save(tompQuizUpdated);
+        return modelMapper.map(tompQuizUpdated, TompQuizDto.class);
+    }
+
+}
