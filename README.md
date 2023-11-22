@@ -1,5 +1,3 @@
-# QuizTime_V2
-
 # YouQuiz
 
 YouQuiz is an innovative e-learning platform designed to provide a comprehensive set of features catering to both instructors and students.
