@@ -1,6 +1,7 @@
 package com.youcode.youQuizV2.Controller;
 
 import com.youcode.youQuizV2.Service.AnswarService;
+import com.youcode.youQuizV2.Service.ImplService.ValidationService;
 import com.youcode.youQuizV2.dto.AnswarDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ import java.util.Map;
 public class AnswarController {
     @Autowired
     private AnswarService answarService;
+    @Autowired
+    private ValidationService validationService;
 
 
     @PostMapping
@@ -80,6 +83,18 @@ public class AnswarController {
         }catch (Exception e){
             message.put("error", "Answar Not Found with id : "+id);
             return new ResponseEntity<>(message, HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @GetMapping("/validation")
+    public ResponseEntity<Map<String, Object>> getValidations(){
+        Map<String, Object> message = new HashMap<>();
+        try{
+            message.put("list question answar",validationService.getAll());
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }catch (Exception e){
+            message.put("error", "Not found");
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
     }
 }

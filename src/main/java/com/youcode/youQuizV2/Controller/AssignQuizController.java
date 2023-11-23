@@ -23,7 +23,7 @@ public class AssignQuizController {
     public ResponseEntity<Map<String, Object>> assignQuiz(@Valid @RequestBody List<AssignQuizDto> assignQuizDtos){
         Map<String, Object> message = new HashMap<>();
         try{
-            message.put("message", assignQuizService.create(assignQuizDtos));
+            message.put("meessage",assignQuizService.create(assignQuizDtos));
             return new ResponseEntity<>(message, HttpStatus.CREATED);
         }catch (Exception e){
             message.put("error", "not assign Quiz");

@@ -1,6 +1,9 @@
 package com.youcode.youQuizV2.Service.ImplService;
 
 import com.youcode.youQuizV2.Service.ValidationServiceImpl;
+import com.youcode.youQuizV2.dto.AnswarDto;
+import com.youcode.youQuizV2.dto.StudentAnswar.QuestionDtoResponse;
+import com.youcode.youQuizV2.dto.StudentAnswar.ValidationResponceDto;
 import com.youcode.youQuizV2.dto.ValidationDto;
 import com.youcode.youQuizV2.entities.Answar;
 import com.youcode.youQuizV2.entities.Question;
@@ -11,6 +14,8 @@ import com.youcode.youQuizV2.repositories.ValidationRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ValidationService implements ValidationServiceImpl {
@@ -43,5 +48,18 @@ public class ValidationService implements ValidationServiceImpl {
         validation = validationRepository.save(validation);
         return modelMapper.map(validation, ValidationDto.class);
 
+    }
+
+    @Override
+    public List<ValidationResponceDto> getAll() {
+        List<Validation> validations = validationRepository.findAll();
+        return validations.stream()
+                .map(validation -> {
+                    ValidationResponceDto dtoResponse = modelMapper.map(validation, ValidationResponceDto.class);
+                    dtoResponse.setQuestion(modelMapper.map(validation.getQuestion(), QuestionDtoResponse.class));
+                    dtoResponse.setAnswar(modelMapper.map(validation.getAnswar(), AnswarDto.class));
+                    return dtoResponse;
+                })
+                .toList();
     }
 }
