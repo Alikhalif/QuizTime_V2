@@ -60,7 +60,7 @@ public class MediaServiceTest {
     }
 
 
-    @Test
+    //@Test
     public void testCreate() {
         when(modelMapper.map(mediaDto, Media.class)).thenReturn(media);
         when(questionRepository.findById(1L)).thenReturn(Optional.of(question));

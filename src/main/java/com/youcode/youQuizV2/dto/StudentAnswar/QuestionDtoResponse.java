@@ -4,12 +4,16 @@ import com.youcode.youQuizV2.dto.LevelDto;
 import com.youcode.youQuizV2.dto.MediaDto;
 import com.youcode.youQuizV2.dto.SubjectDto;
 import com.youcode.youQuizV2.enums.QuestionType;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+@Data
+@NoArgsConstructor
 public class QuestionDtoResponse {
     private Long id;
     @NotBlank(message = "question content should not be empty")

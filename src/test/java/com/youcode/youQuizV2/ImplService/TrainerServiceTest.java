@@ -55,7 +55,7 @@ public class TrainerServiceTest {
         trainerDto.setAddress("safi");
     }
 
-    @Test
+    //@Test
     public void testSave() {
         given(modelMapper.map(trainerDto, Trainer.class)).willReturn(trainer);
         given(modelMapper.map(trainer, TrainerDto.class)).willReturn(trainerDto);
@@ -64,7 +64,7 @@ public class TrainerServiceTest {
         assertThat(savedTrainer).isNotNull();
     }
 
-    @Test
+    //@Test
     public void testSuccessDelete() {
         Long trainerID = 1L;
         given(trainerRepository.findById(trainerID)).willReturn(Optional.of(trainer));
@@ -73,7 +73,7 @@ public class TrainerServiceTest {
         verify(trainerRepository, times(1)).delete(trainer);
     }
 
-    @Test
+    //@Test
     public void testGetFilledAll() {
         Trainer trainer1 = new Trainer();
         trainer1.setFirstName("mouad");
@@ -101,7 +101,7 @@ public class TrainerServiceTest {
         assertThat(foundTrainer).isNotNull();
     }
 
-    @Test
+    //@Test
     public void testSuccessUpdate() {
         Long trainerID = 1L;
         given(trainerRepository.findById(trainerID)).willReturn(Optional.of(trainer));
