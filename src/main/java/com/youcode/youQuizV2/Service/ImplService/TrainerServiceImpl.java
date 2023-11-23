@@ -7,8 +7,12 @@ import com.youcode.youQuizV2.repositories.TrainerRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,5 +63,12 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     public void delete(Long id){
         trainerRepository.deleteById(id);
+    }
+
+    @Override
+    public List<TrainerDto> findByLimit(int pageNbr){
+        Pageable page = PageRequest.of(pageNbr-1, 10);
+        Page<Trainer> trainers = trainerRepository.findAll(page);
+        return Arrays.asList(modelMapper.map(trainers.toList(), TrainerDto[].class));
     }
 }

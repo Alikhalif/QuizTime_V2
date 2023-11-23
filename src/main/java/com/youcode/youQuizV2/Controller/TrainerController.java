@@ -47,4 +47,11 @@ public class TrainerController {
     public void deleteTrainer(@PathVariable Long id){
         trainerService.delete(id);
     }
+
+
+    @GetMapping("/find/{page}")
+    public ResponseEntity<List<TrainerDto>> findTrainerByLimit(@PathVariable int page){
+        List<TrainerDto> trainers = trainerService.findByLimit(page);
+        return ResponseEntity.ok(trainers);
+    }
 }
