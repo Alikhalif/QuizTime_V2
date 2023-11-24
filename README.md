@@ -300,67 +300,58 @@ To run this project, you will need to define the following environments variable
 | :-------- | :------- | :------------------------- |
 | `id`      | `int` | **Required**. Id of subject used to fetch questions |
 
-#### Get responses by question
+
+#### Get all answars
 
 ```http
-  GET /api/questions/response/${id}
+  GET /api/answars
 ```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `id`      | `int` | **Required**. Id of question used to fetch responses |
+| `id` | `int` | id of answars |
+| `response` | `string` | the content of that answars |
 
-#### Get all responses
+#### Get one answar
 
 ```http
-  GET /api/responses
+  GET /api/answars/${id}
 ```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `id` | `int` | id of response |
-| `response` | `string` | the content of that response |
+| `id`      | `int` | **Required**. Id of answar used to fetch |
 
-#### Get one response
+#### Delete answar
 
 ```http
-  GET /api/responses/${id}
+  DELETE /api/answar/${id}
 ```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `id`      | `int` | **Required**. Id of response used to fetch |
+| `id`      | `int` | **Required**. Id of answar to delete |
 
-#### Delete response
+#### Create answar
 
 ```http
-  DELETE /api/responses/${id}
+  POST /api/answar
 ```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `id`      | `int` | **Required**. Id of response to delete |
+| `response` | `string` | **Required**. the content of that answar |
 
-#### Create response
+#### Update answar
 
 ```http
-  POST /api/responses
+  PUT /api/answars/${id}
 ```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `response` | `string` | **Required**. the content of that response |
-
-#### Update response
-
-```http
-  PUT /api/responses/${id}
-```
-
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `id`      | `int` | **Required**. Id of response to update |
-| `response` | `string` | **Required**. the content of that response |
+| `id`      | `int` | **Required**. Id of answar to update |
+| `answarText` | `string` | **Required**. the content of that answar |
 
 #### Get all validations
 
@@ -375,25 +366,7 @@ To run this project, you will need to define the following environments variable
 | `response` | `Response` | response of that question |
 | `points` | `double` | points of that response in this question |
 
-#### Get one validation
 
-```http
-  GET /api/validations/${id}
-```
-
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `id`      | `int` | **Required**. Id of validation to fetch |
-
-#### Delete validation
-
-```http
-  DELETE /api/validations/${id}
-```
-
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `id`      | `int` | **Required**. Id of validation to delete |
 
 #### Create validation
 
@@ -420,10 +393,10 @@ To run this project, you will need to define the following environments variable
 | `response` | `int` | id of response of that question |
 | `points` | `double` | points of that response in this question |
 
-#### Get all quizzes
+#### Get all quiz
 
 ```http
-  GET /api/quizzes
+  GET /api/quiz
 ```
 
 | Parameter | Type     | Description                |
@@ -440,7 +413,7 @@ To run this project, you will need to define the following environments variable
 #### Get one quiz
 
 ```http
-  GET /api/quizzes/${id}
+  GET /api/quiz/${id}
 ```
 
 | Parameter | Type     | Description                |
@@ -460,7 +433,7 @@ To run this project, you will need to define the following environments variable
 #### Create quiz
 
 ```http
-  POST /api/quizzes
+  POST /api/quiz
 ```
 
 | Parameter | Type     | Description                |
@@ -469,14 +442,13 @@ To run this project, you will need to define the following environments variable
 | `showAnswers` | `boolean` | **Required**. option to show the answers of that quiz or not |
 | `showFinalResults` | `boolean` | **Required**. option to show the final results of that quiz or not |
 | `chanceNum` | `int` | **Required**. number of chances of that quiz |
-| `durationInMinutes` | `int` | **Required**. duration in min of that quiz |
 | `remark` | `string` | remark of quiz |
 | `trainer_id` | `int` | **Required**. id of trainer that made that quiz |
 
 #### Update quiz
 
 ```http
-  PUT /api/quizzes/${id}
+  PUT /api/quiz/${id}
 ```
 
 | Parameter | Type     | Description                |
@@ -640,7 +612,7 @@ To run this project, you will need to define the following environments variable
 #### Get one assignment
 
 ```http
-  GET /api/assignQuiz/${id}
+  GET /api/assign_quiz/${id}
 ```
 
 | Parameter | Type     | Description                |
@@ -650,7 +622,7 @@ To run this project, you will need to define the following environments variable
 #### Delete assignment
 
 ```http
-  DELETE /api/assignQuiz/${id}
+  DELETE /api/assign_quiz/${id}
 ```
 
 | Parameter | Type     | Description                |
@@ -660,7 +632,7 @@ To run this project, you will need to define the following environments variable
 #### Create assignment
 
 ```http
-  POST /api/assignQuiz
+  POST /api/assign_quiz
 ```
 
 | Parameter | Type     | Description                |
@@ -677,7 +649,7 @@ To run this project, you will need to define the following environments variable
 #### Update assignment
 
 ```http
-  PUT /api/assignQuiz/${id}
+  PUT /api/assign_quiz/${id}
 ```
 
 | Parameter | Type     | Description                |
@@ -705,10 +677,10 @@ To run this project, you will need to define the following environments variable
 | `quiz_id` | `int` | id of quiz that you want to assign to |
 | `time` | `int` | seconds to answer a question in a quiz |
 
-#### Detach a question from a quiz
+#### delete Temp Question To Quiz
 
 ```http
-  DELETE /api/questions/${questionID}/tempo/${quizID}
+  DELETE /api/questions/temp/{id_quiz}/{id_question}
 ```
 
 | Parameter | Type     | Description                |
@@ -719,7 +691,7 @@ To run this project, you will need to define the following environments variable
 #### Update time of a question in a quiz
 
 ```http
-  PATCH /api/questions/${questionID}
+  PUT /api/questions/temp/{id_quiz}/{id_question}
 ```
 
 | Parameter | Type     | Description                |
@@ -728,21 +700,11 @@ To run this project, you will need to define the following environments variable
 | `quiz_id` | `int` | id of quiz that you want to assign to |
 | `time` | `int` | seconds you want to update |
 
-#### Answer a question
 
+
+#### Get All Answar Of Student
 ```http
-  POST /api/answers
-```
-
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `assignQuiz_id` | `int` | id of assignment you want to answer |
-| `validation_id` | `int` | id of validation or question that you will answer |
-
-#### Get student answer in an assignment
-
-```http
-  GET /api/answers/${id}/response
+  GET /api/answar_student/${assign_id}
 ```
 
 | Parameter | Type     | Description                |
