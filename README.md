@@ -280,26 +280,6 @@ To run this project, you will need to define the following environments variable
 | `subject_id` | `int` | **Required**. id of the subject of that question |
 | `level_id` | `int` | **Required**. id of the level of that question |
 
-#### Get questions by level
-
-```http
-  GET /api/questions/level/${id}
-```
-
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `id`      | `int` | **Required**. Id of level used to fetch questions |
-
-#### Get questions by subject
-
-```http
-  GET /api/questions/subject/${id}
-```
-
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `id`      | `int` | **Required**. Id of subject used to fetch questions |
-
 
 #### Get all answars
 
